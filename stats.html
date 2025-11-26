@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OVRCLK | Stats</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <a href="index.html" class="logo">OVRCLK</a>
+        <div class="nav-links">
+            <a href="index.html">About</a>
+            <a href="members.html">Members</a>
+            <a href="stats.html" class="active">Stats</a>
+            <a href="ranks.html">Ranks</a>
+        </div>
+    </nav>
+
+    <main class="fade-in">
+        <section class="hero">
+            <h1>Team <span style="color: var(--ctp-green)">Stats</span></h1>
+            <p class="tagline">Tracking our progress on the global stage.</p>
+        </section>
+
+        <section class="stats-container">
+            <!-- Main Stats Card -->
+            <div class="stats-card">
+                <div class="stats-header">
+                    <h2>CTFtime Performance</h2>
+                    <span class="badge" id="status-badge">Loading...</span>
+                </div>
+
+                <div id="loading-stats">
+                    <p style="text-align: center; color: var(--ctp-subtext0);">
+                        Connecting to CTFtime API...
+                    </p>
+                </div>
+
+                <div id="stats-content" style="display: none;">
+                    <div class="stats-metrics">
+                        <div class="metric">
+                            <span class="label">Global Rating</span>
+                            <span class="value" id="global-rating">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Global Rank</span>
+                            <span class="value" id="global-rank">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Country Rank</span>
+                            <span class="value" id="country-rank">--</span>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; border-top: 1px solid var(--ctp-surface1); padding-top: 1.5rem;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Team Details</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.95rem;">
+                            <div>
+                                <span style="color: var(--ctp-subtext1);">Name:</span>
+                                <span style="color: var(--ctp-text); font-weight: bold;" id="team-name">--</span>
+                            </div>
+                            <div>
+                                <span style="color: var(--ctp-subtext1);">Country:</span>
+                                <span style="color: var(--ctp-text); font-weight: bold;" id="team-country">--</span>
+                            </div>
+                            <div>
+                                <span style="color: var(--ctp-subtext1);">ID:</span>
+                                <span style="color: var(--ctp-text);" id="team-id">--</span>
+                            </div>
+                            <div>
+                                <span style="color: var(--ctp-subtext1);">Year:</span>
+                                <span style="color: var(--ctp-text);" id="stats-year">--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Events Card (Placeholder for now as API might not return events in simple detail view) -->
+            <div class="stats-card" id="events-card" style="display: none;">
+                <h2>Recent Activity</h2>
+                <div id="events-list">
+                    <!-- Events will be populated here if available -->
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 OVRCLK Team.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const teamId = '412832';
+            // Hardcoded data (No Server Mode)
+            const teamData = {
+                name: "OVRCLK",
+                id: 412832,
+                country: "International",
+                rating: "3.8333",
+                rank: "113",
+                countryRank: "101",
+                events: [
+                    {
+                        name: "GlacierCTF 2025",
+                        rank: 113,
+                        points: 500,
+                        rating_points: 3.8333
+                    }
+                ]
+            };
+
+            // Simulate a slight delay for effect (optional)
+            await new Promise(r => setTimeout(r, 500));
+
+            // Render Team Details
+            document.getElementById('team-name').textContent = teamData.name || 'OVRCLK';
+            document.getElementById('team-country').textContent = teamData.country || 'International';
+            document.getElementById('team-id').textContent = teamData.id;
+            document.getElementById('stats-year').textContent = new Date().getFullYear();
+
+            // Update Stats
+            document.getElementById('global-rating').textContent = teamData.rating;
+            document.getElementById('global-rank').textContent = '#' + teamData.rank;
+            document.getElementById('country-rank').textContent = teamData.countryRank ? '#' + teamData.countryRank : 'N/A';
+
+            document.getElementById('status-badge').textContent = 'Live';
+            document.getElementById('status-badge').style.backgroundColor = 'var(--ctp-green)';
+
+            // Render Events
+            if (teamData.events && teamData.events.length > 0) {
+                const eventsList = document.getElementById('events-list');
+                eventsList.innerHTML = '<ul class="event-list"></ul>';
+                const ul = eventsList.querySelector('ul');
+
+                teamData.events.forEach(event => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                            <span class="event-name">${event.name}</span>
+                            <div style="text-align: right;">
+                                <span style="display: block; font-size: 0.9rem; color: var(--ctp-text);">Rank: #${event.rank}</span>
+                                <span style="font-size: 0.8rem; color: var(--ctp-subtext0);">${event.points} pts</span>
+                            </div>
+                        `;
+                    ul.appendChild(li);
+                });
+                document.getElementById('events-card').style.display = 'block';
+            }
+
+            // Show Content
+            document.getElementById('loading-stats').style.display = 'none';
+            document.getElementById('stats-content').style.display = 'block';
+
+        });
+    </script>
+</body>
+
+</html>
