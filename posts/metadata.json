@@ -1,0 +1,41 @@
+[
+    {
+        "id": "intro-to-ctf",
+        "title": "Introduction to CTFs",
+        "date": "2025-10-24",
+        "category": "Guide",
+        "tags": [
+            "beginner",
+            "ctf",
+            "guide"
+        ],
+        "file": "posts/intro.md",
+        "summary": "Everything you need to know to get started with Capture The Flag competitions."
+    },
+    {
+        "id": "web-exploitation-101",
+        "title": "Web Exploitation 101",
+        "date": "2025-11-01",
+        "category": "Web",
+        "tags": [
+            "web",
+            "hacking",
+            "tutorial"
+        ],
+        "file": "posts/web101.md",
+        "summary": "A deep dive into common web vulnerabilities and how to exploit them."
+    },
+    {
+        "id": "reverse-engineering-basics",
+        "title": "Reverse Engineering Basics",
+        "date": "2025-11-15",
+        "category": "Reverse Engineering",
+        "tags": [
+            "rev",
+            "binary",
+            "assembly"
+        ],
+        "file": "posts/rev_basics.md",
+        "summary": "Understanding assembly and decompiling binaries for fun and profit."
+    }
+]
